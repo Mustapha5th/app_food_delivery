@@ -1,5 +1,8 @@
-import 'package:app_food_delivery/src/pages/signIn_page.dart';
+
+import 'package:app_food_delivery/src/models/user_model.dart';
+import 'package:app_food_delivery/src/services/authentication_services.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // Custom Widgets
 import '../widgets/order_card.dart';
@@ -12,24 +15,28 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Your Food Cart",
-          style: TextStyle(color: Colors.black),
+    return StreamProvider<User>.value(
+      value: AuthenticationService().user,
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: Text(
+        //     "Your Food Cart",
+        //     style: TextStyle(color: Colors.black),
+        //   ),
+        //   centerTitle: true,
+        //   backgroundColor: Colors.white,
+        //   elevation: 0.0,
+        // ),
+         backgroundColor: Colors.white,
+        body: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          scrollDirection: Axis.vertical,
+          children: [
+            OrderCard(),
+            OrderCard(),
+            _buildTotalContainer(),
+          ],
         ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-      ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        scrollDirection: Axis.vertical,
-        children: [
-          OrderCard(),
-          OrderCard(),
-          _buildTotalContainer(),
-        ],
       ),
     );
   }
@@ -41,18 +48,7 @@ class _OrderPageState extends State<OrderPage> {
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Column(
         children: [
-          // ListTile(
-          //   leading: Text("Cart Total", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.grey),),
-          //   trailing: Text("23.0", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, ),),
-          // ),
-          // ListTile(
-          //   leading: Text("Cart Total", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.grey),),
-          //   trailing: Text("23.0", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, ),),
-          // ),
-          // ListTile(
-          //   leading: Text("Cart Total", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.grey),),
-          //   trailing: Text("23.0", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, ),),
-          // ),
+        
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -137,7 +133,7 @@ class _OrderPageState extends State<OrderPage> {
           ),
           GestureDetector(
             onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInPage()));
+             // Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignInPage()));
             },
             child: Container(
               height: 50.0,
